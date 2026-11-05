@@ -26,8 +26,27 @@ EOF
 }
 
 is_ffmpeg_exist() {
-   command -v ffmpeg && return 0
+   command -v ffmpeg > /dev/null && return 0
    return 1
+}
+
+get_file_size() {
+    wc -c < "$1" || {
+        printf "failed to read file size"
+        return 1
+    }
+    return 0
+}
+
+bytes_to_mb() {
+    printf "%s" "$(echo "$1 / (1024 / 1024)" | bc -q)"
+}
+
+
+
+perform_compression() {
+    _method="$1"
+    _expected_size="$2"
 }
 
 main() {
@@ -40,6 +59,7 @@ main() {
     is_ffmpeg_exist || {
         echo "install ffmpeg before use"
     }
-    
+
+
 
 }
