@@ -4,6 +4,8 @@
 # 
 
 
+set -eu     # guard rails
+
 PROG_NAME=$(basename "$0")
 SCRIPT_DIR=$(cd "$(dirname "$0")" && pwd -P)
 
@@ -21,5 +23,23 @@ Examples:
   $0 video.mp4 50 no
   $0 my_movie.mkv 200 yes
 EOF
-    exit 1
+}
+
+is_ffmpeg_exist() {
+   command -v ffmpeg && return 0
+   return 1
+}
+
+main() {
+    [ $# -eq 3 ] || {
+        echo "Invalid use: invalid arg num"
+        usage
+        return 1
+    }
+
+    is_ffmpeg_exist || {
+        echo "install ffmpeg before use"
+    }
+    
+
 }
