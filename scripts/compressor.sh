@@ -35,6 +35,11 @@ is_ffmpeg_exist() {
    return 1
 }
 
+is_bc_exists() {
+    command -v bc > /dev/null && return 0
+    return 1
+}
+
 get_file_size() {
     wc -c < "$1" || {
         printf "failed to read file size"
@@ -56,15 +61,14 @@ perform_compression() {
 
 main() {
     [ $# -eq 3 ] || {
-        echo "Invalid use: invalid arg num"
         usage
-        return 1
+        die "Invalid use: invalid arg num"
     }
 
     is_ffmpeg_exist || {
-        echo "install ffmpeg before use"
-        return 1
+        die "install ffmpeg before use"
     }
+
 
 
 
