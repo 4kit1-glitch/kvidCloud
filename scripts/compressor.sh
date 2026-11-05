@@ -25,6 +25,11 @@ Examples:
 EOF
 }
 
+die() {
+    printf "Error: %s\n" "$1" >&2
+    exit 1
+}
+
 is_ffmpeg_exist() {
    command -v ffmpeg > /dev/null && return 0
    return 1
@@ -39,7 +44,7 @@ get_file_size() {
 }
 
 bytes_to_mb() {
-    printf "%s" "$(echo "$1 / (1024 / 1024)" | bc -q)"
+    printf "%s" "$(echo "scale=2; $1 / (1024 / 1024)" | bc -q)"
 }
 
 
@@ -58,6 +63,7 @@ main() {
 
     is_ffmpeg_exist || {
         echo "install ffmpeg before use"
+        return 1
     }
 
 
