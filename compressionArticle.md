@@ -90,5 +90,21 @@ Here is the fundamental problem of video: A standard 1080p video at 30 frames pe
 To make video small enough to stream or back up, the codec has to use two distinct types of compression.
 
 ### Layer 1 : Spacial compression( concept of I-frames)
-I frames (key frames) these are complete stand alone photographs found in a video
-- its important in that 
+This is compression within a single frame. Imagine taking a high-quality JPEG photo. The algorithm looks at the image and says:
+
+```"This whole wall is just plain blue. Instead of storing 10,000 blue pixels, I'll just store one blue pixel and say 'repeat 10,000 times'."```
+
+In video, these are called I-Frames (Intra-frames), also known as Keyframes. An I-Frame is essentially a complete, full-quality still image. If you ever pause a video and export that single frame, you are just seeing an I-Frame.
+
+Why it matters: Without I-Frames, a video couldn't start. The player needs a complete picture to begin with.
+
+
+### Layer 2: Temporal Compression ( concept of P-frames and B-frames)
+Imagine a video of a person talking in front of a static bookshelf.
+Does the bookshelf move? No. Does the person's shirt move much? No. Only their mouth and face are changing.
+
+The codec says:
+
+`"Instead of storing the bookshelf 30 times a second, I'll store the bookshelf ONCE. For the next 29 frames, I'll just write down 'keep the bookshelf the same, but move the lips 2 pixels down'."`
+
+These are called `P-Frames (Predicted)` and `B-Frames (Bi-directional)`. They are tiny. They contain almost no image data—just mathematical instructions of what changed from the previous frame.
